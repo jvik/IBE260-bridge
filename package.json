@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node build/src/main.js",
-    "dev": "ts-node ./src/main.ts",
+    "dev": "node --watch --loader=ts-node/esm ./src/main.ts",
+    "clean": "rimraf coverage build tmp",
     "prebuild": "npm run lint",
     "build": "tsc -p tsconfig.json",
     "build:watch": "tsc -w -p tsconfig.json",
     "build:release": "npm run clean && tsc -p tsconfig.release.json",
     "lint": "eslint . --ext .ts --ext .mts",
-    "prettier": "prettier --config .prettierrc --write .",
+    "prettier": "prettier --config .prettierrc --write ."
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,6 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.5",
-    "nodemon": "^3.0.3",
     "ts-node": "^10.9.2"
   }
 }
