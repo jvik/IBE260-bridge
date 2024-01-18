@@ -1,1 +1,1 @@
-# IBE120-bridge
+# IBE260-bridge
