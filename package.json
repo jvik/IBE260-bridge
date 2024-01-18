@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type":"module",
   "scripts": {
     "start": "node build/src/main.js",
     "dev": "node --watch --loader=ts-node/esm ./src/main.ts",
