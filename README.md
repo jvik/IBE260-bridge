@@ -1,7 +1,5 @@
 # IBE260-Bridge
 
-This project is a bridge game simulator. It allows players to join a table, place bids, and play rounds of bridge.
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
