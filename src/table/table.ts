@@ -1,4 +1,4 @@
-import Player from "../players/player.js";
+import Player from "@/players/player.js";
 
 class Table {
   private static instance: Table;

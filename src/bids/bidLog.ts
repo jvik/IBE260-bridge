@@ -1,4 +1,4 @@
-import Bid from "./bid.js";
+import Bid from "@/bids/bid.js";
 
 class BidLog {
   private static instance: BidLog;

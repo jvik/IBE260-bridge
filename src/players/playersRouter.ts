@@ -1,6 +1,6 @@
 import express from 'express';
-import Player from './player.js';
-import Table from '../table/table.js';
+import Player from '@/players/player.js';
+import Table from '@/table/table.js';
 
 const router = express.Router();
 

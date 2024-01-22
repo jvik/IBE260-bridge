@@ -1,4 +1,4 @@
-import Player from "../players/player.js";
+import Player from "@/players/player.js";
 
 class Bid {
   suit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump" | "pass";
