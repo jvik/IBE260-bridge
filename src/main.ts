@@ -2,9 +2,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import playersRouter from './players/playersRouter.js';
 import bidRouter from './bids/bidsRouter.js';
+import 'dotenv/config';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.json());
