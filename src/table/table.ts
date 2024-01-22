@@ -18,6 +18,18 @@ class Table {
 
   // This is a helper function to add a player to the table
   addPlayer(player) {
+    // Check if a player with the same name already exists
+    const existingPlayer = this.findByName(player.name);
+    if (existingPlayer) {
+      throw new Error(`Player already exists with the name ${player.name}}`);
+    }
+
+    // Check if a player with the same direction already exists
+    const existingPlayerDirection = this.findByDirection(player.direction);
+    if (existingPlayerDirection) {
+      throw new Error("The table already has a player in that direction");
+    }
+
     this.players.push(player);
   }
 
