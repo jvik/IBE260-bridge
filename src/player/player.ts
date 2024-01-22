@@ -1,7 +1,3 @@
-interface Player {
-  name: string;
-}
-
 class Player {
   name: string;
   direction: "North" | "South" | "East" | "West";

@@ -1,5 +1,5 @@
 import express from 'express';
-import Player from './players.js';
+import Player from './player.js';
 import Table from '../table/table.js';
 
 const router = express.Router();

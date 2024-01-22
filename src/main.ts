@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import playersRouter from './players/playersRouter.js';
-import bidRouter from './bid/bidRouter.js';
+import playersRouter from './player/playersRouter.js';
+import bidRouter from './bid/bidsRouter.js';
 
 const app = express();
 const port = 3000;
