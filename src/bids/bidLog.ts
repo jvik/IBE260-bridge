@@ -42,6 +42,15 @@ class BidLog {
     }
     return true;
   }
+
+  // This helper function checks if the bidding is over
+  isBiddingOver() {
+    const lastThreeBids = this.bidLog.slice(-3);
+    const lastThreeBidsArePass = lastThreeBids.every(
+      (bid) => bid.suit === "pass"
+    );
+    return lastThreeBidsArePass;
+  }
 }
 
 export default BidLog;
