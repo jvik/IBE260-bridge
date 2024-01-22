@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "start": "node build/src/main.js",
-    "dev": "node --watch --loader=ts-node/esm ./src/main.ts",
+    "dev": "tsx watch ./src/main.ts",
     "clean": "rimraf coverage build tmp",
     "prebuild": "npm run lint",
     "build": "tsc -p tsconfig.json",
@@ -35,6 +35,6 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.5",
-    "ts-node": "^10.9.2"
+    "tsx": "^4.7.0"
   }
 }
