@@ -30,6 +30,11 @@ class Table {
   findByDirection(direction) {
     return this.players.find((player) => player.direction === direction);
   }
+
+  // This is a helper function to find a player by their name
+  findByName(name) {
+    return this.players.find((player) => player.name === name);
+  }
 }
 
 export default Table;
