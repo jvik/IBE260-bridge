@@ -2,11 +2,11 @@
   "name": "ibe260-bridge",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "type":"module",
+  "main": "src/server.ts",
+  "type": "module",
   "scripts": {
-    "start": "node build/src/main.js",
-    "dev": "node --watch --loader=ts-node/esm ./src/main.ts",
+    "start": "node build/src/server.js",
+    "dev": "tsx watch ./src/server.ts",
     "clean": "rimraf coverage build tmp",
     "prebuild": "npm run lint",
     "build": "tsc -p tsconfig.json",
@@ -35,6 +35,11 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.5",
-    "ts-node": "^10.9.2"
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "dotenv": "^16.3.2",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jest": "^27.6.3",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.7.0"
   }
 }
