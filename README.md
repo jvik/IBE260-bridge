@@ -1,4 +1,4 @@
-# IBE260-Bridge
+# IBE260-bridge
 
 ## Getting Started
 
