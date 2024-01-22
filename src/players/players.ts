@@ -11,6 +11,7 @@ class Player {
     this.direction = direction;
   }
 
+  // This is a helper function to get the player's name
   getPlayer(): string {
     return this.name;
   }
