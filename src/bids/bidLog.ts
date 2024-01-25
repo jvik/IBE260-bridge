@@ -47,7 +47,7 @@ class BidLog {
   isBiddingOver() {
     const lastThreeBids = this.bidLog.slice(-3);
     const lastThreeBidsArePass = lastThreeBids.every(
-      (bid) => bid.suit === "pass"
+      (bid) => bid.pass === true
     );
     return lastThreeBidsArePass;
   }
