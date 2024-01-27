@@ -21,7 +21,6 @@ class BidLog {
     console.log(bid);
     // Check if the bid is valid
     if (this.bidLog.length > 0 && !this.compareBid(bid)) {
-        console.log('Hello 2');
         throw new Error("This bid is too low");
       }
     this.bidLog.push(bid);
@@ -47,7 +46,6 @@ class BidLog {
       console.log("Suit too low");
       throw new Error("Suit is too low");
     }
-    
     if (levelCheck && !suitCheck) {
       console.log("Bid too low");
       throw new Error("This bid is too low");
