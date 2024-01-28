@@ -4,6 +4,11 @@ import BidLog from './bidLog.js';
 
 const router = express.Router();
 
+router.get('/', (_req, res) => {
+  const bidLog = BidLog.getInstance();
+  res.json(bidLog.getBidLog());
+});
+
 router.post('/bid', (req, res) => {
   const bidLog = BidLog.getInstance();
   let roundOver = bidLog.isBiddingOver();
