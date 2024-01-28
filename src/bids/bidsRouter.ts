@@ -1,10 +1,24 @@
 import express from 'express';
+import Bid from '@/bids/bid.js';
+import BidLog from './bidLog.js';
+
 const router = express.Router();
 
-router.post('/', (req, res) => {
-  const { player, bid } = req.body;
+router.post('/bid', (req, res) => {
+  const bidLog = BidLog.getInstance();
+  let roundOver = bidLog.isBiddingOver();
+
+  const { pass, suit, level, player } = req.body;
+  const newBid = new Bid(pass, suit, level, player);
+
+  if (!roundOver) {
+    bidLog.addBid(newBid);
+  }
+  roundOver = bidLog.isBiddingOver();
+
   console.log(req.body);
-  res.json({ player, bid });
+
+  res.json({ roundOver });
 });
 
 export default router;

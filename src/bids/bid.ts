@@ -7,10 +7,26 @@ class Bid {
   level: number;
   player: Player;
 
-  constructor(pass, suit, level) {
+  constructor(pass, suit, level, player) {
     this.pass = pass;
     this.suit = suit;
     this.level = level;
+    this.player = player;
+  }
+
+  getSuitValue(): number {
+    switch (this.suit) {
+      case 'clubs':
+        return 1;
+      case 'diamonds':
+        return 2;
+      case "hearts":
+        return 3;
+      case "spades":
+        return 4;
+      case "no-trump":
+        return 5;
+    }
   }
 }
 
