@@ -13,8 +13,8 @@ router.post('/bid', (req, res) => {
   const bidLog = BidLog.getInstance();
   let roundOver = bidLog.isBiddingOver();
 
-  const { pass, suit, level, player } = req.body;
-  const newBid = new Bid(pass, suit, level, player);
+  const { pass, suit, rank, player } = req.body;
+  const newBid = new Bid(pass, suit, rank, player);
 
   if (!roundOver) {
     bidLog.addBid(newBid);

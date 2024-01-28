@@ -1,8 +1,10 @@
+type Direction = "North" | "South" | "East" | "West";
+
 class Player {
   name: string;
-  direction: "North" | "South" | "East" | "West";
+  direction: Direction;
 
-  constructor(name, direction) {
+  constructor(name: string, direction: Direction) {
     this.name = name;
     this.direction = direction;
   }
