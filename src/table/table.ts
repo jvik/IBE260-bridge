@@ -49,6 +49,13 @@ class Table {
   findByName(name: string): Player {
     return this.players.find((player) => player.name === name);
   }
+
+  populate() {
+    this.addPlayer(new Player("Player 1", "North"));
+    this.addPlayer(new Player("Player 2", "South"));
+    this.addPlayer(new Player("Player 3", "East"));
+    this.addPlayer(new Player("Player 4", "West"));
+  }
 }
 
 export default Table;
