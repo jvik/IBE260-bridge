@@ -5,9 +5,10 @@ class Bid {
   suit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
   // Using number because that will make it easier to compare
   rank: number;
-  player: string;
+  playerName: string;
 
-  constructor(pass, suit, rank, playerName) {
+  constructor(suit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump",
+  pass: boolean, rank: number, playerName: string) {
     if (typeof pass !== 'boolean') {
       throw new Error('Invalid value for pass');
     }
@@ -27,7 +28,7 @@ class Bid {
     this.pass = pass;
     this.suit = suit;
     this.rank = rank;
-    this.player = playerName;
+    this.playerName = playerName;
   }
 
   getSuitValue(): number {

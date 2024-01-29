@@ -1,4 +1,4 @@
-import Player from "@/players/player.js";
+import Player, { Direction } from "@/players/player.js";
 
 class Table {
   private static instance: Table;
@@ -17,7 +17,7 @@ class Table {
   }
 
   // This is a helper function to add a player to the table
-  addPlayer(player) {
+  addPlayer(player: Player) {
     // Check if a player with the same name already exists
     const existingPlayer = this.findByName(player.name);
     if (existingPlayer) {
@@ -34,17 +34,17 @@ class Table {
   }
 
   // This is a helper function to get all players
-  getPlayers() {
+  getPlayers(): Player[] {
     return this.players;
   }
 
   // This is a helper function to find a player by their direction
-  findByDirection(direction) {
+  findByDirection(direction: Direction): Player {
     return this.players.find((player) => player.direction === direction);
   }
 
   // This is a helper function to find a player by their name
-  findByName(name) {
+  findByName(name: string): Player {
     return this.players.find((player) => player.name === name);
   }
 }

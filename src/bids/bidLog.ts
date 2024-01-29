@@ -1,4 +1,5 @@
 import Bid from "@/bids/bid.js";
+import Rules from "@/table/rules.js";
 
 class BidLog {
   private static instance: BidLog;
@@ -16,12 +17,14 @@ class BidLog {
     return BidLog.instance;
   }
 
-  addBid(bid) {
+  addBid(bid: Bid) {
     console.log(bid);
     // Check if the bid is valid
     if (this.bidLog.length > 0 && !this.isNewBidLargerThanLastBid(bid)) {
       throw new Error("This bid is too low");
     }
+    try {console.log(this.isBidMeaningKnown(bid))}
+    catch {console.log("Issue with 'isBidMeaningKnown'.")}
     this.bidLog.push(bid);
   }
 
@@ -50,6 +53,13 @@ class BidLog {
       throw new Error("This bid is too low");
     }
     return true;
+  }
+
+  isBidMeaningKnown(bid: Bid) : boolean {
+    // When false, should request partner's explanation
+    if (bid.rank < 3) return false
+    // also should check the ruleSet
+    return true
   }
 
   // This helper function checks if the bidding is over
