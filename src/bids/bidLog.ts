@@ -1,5 +1,6 @@
 import Bid from "@/bids/bid.js";
-import Rules from "@/table/rules.js";
+import RuleSet from "@/table/ruleSet.js";
+import Table from "@/table/table.js";
 
 class BidLog {
   private static instance: BidLog;
@@ -56,10 +57,10 @@ class BidLog {
   }
 
   isBidMeaningKnown(bid: Bid) : boolean {
-    // When false, should request partner's explanation
-    if (bid.rank < 3) return false
-    // also should check the ruleSet
-    return true
+    if (bid.rank < 3) return true
+    const ourTable = Table.getInstance();
+    const tableRules = ourTable.getRules();
+    return tableRules.ruleSet.some(rule => rule.suit === bid.suit && rule.rank === bid.rank);
   }
 
   // This helper function checks if the bidding is over

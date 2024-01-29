@@ -1,3 +1,4 @@
+import ruleSet from "@/table/ruleSet.js";
 import Table from "@/table/table.js";
 
 class Bid {

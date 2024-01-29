@@ -40,6 +40,11 @@ class Table {
     return this.players;
   }
 
+  // This is a helper function to get all rules set for the table
+  getRules(): ruleSet {
+    return this.tableRules;
+  }
+
   // This is a helper function to find a player by their direction
   findByDirection(direction: Direction): Player {
     return this.players.find((player) => player.direction === direction);

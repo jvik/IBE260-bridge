@@ -4,6 +4,7 @@ import playersRouter from '@/players/playersRouter.js';
 import bidRouter from '@/bids/bidsRouter.js';
 import 'dotenv/config';
 import Table from './table/table.js';
+import rulesRouter from '@/table/rulesRouter.js'
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,6 +14,7 @@ app.use(bodyParser.json());
 
 app.use('/players', playersRouter);
 app.use('/bids', bidRouter);
+app.use('/rules', rulesRouter);
 
 if (process.env.populate === 'true') {
   Table.getInstance().populate();
