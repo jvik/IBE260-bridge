@@ -1,8 +1,10 @@
 import Player, { Direction } from "@/players/player.js";
+import ruleSet from "./ruleSet.js";
 
 class Table {
   private static instance: Table;
   players: Player[] = [];
+  tableRules: ruleSet;
 
   constructor() {
     this.players = [];

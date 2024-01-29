@@ -1,9 +1,9 @@
 import Table from "@/table/table.js";
 
 class Bid {
-  pass: boolean;
   suit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
   // Using number because that will make it easier to compare
+  pass: boolean;
   rank: number;
   playerName: string;
 
