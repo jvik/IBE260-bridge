@@ -1,17 +1,33 @@
-import Player from "@/players/player.js";
+import Table from "@/table/table.js";
 
 class Bid {
   pass: boolean;
   suit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
   // Using number because that will make it easier to compare
-  level: number;
-  player: Player;
+  rank: number;
+  playerName: string;
 
-  constructor(pass, suit, level, player) {
+  constructor(pass, suit, rank, playerName) {
+    if (typeof pass !== 'boolean') {
+      throw new Error('Invalid value for pass');
+    }
+    if (!['spades', 'hearts', 'diamonds', 'clubs', 'no-trump'].includes(suit)) {
+      throw new Error(`${suit} is an invalid suit`);
+    }
+    if (typeof rank !== 'number' || rank <= 2 || rank >= 14) {
+      throw new Error('Invalid rank');
+    }
+
+    const ourTable = Table.getInstance();
+    const myPlayer = ourTable.findByName(playerName);
+    if (!myPlayer) {
+      throw new Error('Player not found');
+    }
+
     this.pass = pass;
     this.suit = suit;
-    this.level = level;
-    this.player = player;
+    this.rank = rank;
+    this.player = playerName;
   }
 
   getSuitValue(): number {
