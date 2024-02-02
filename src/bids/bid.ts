@@ -1,4 +1,3 @@
-import ruleSet from "@/table/ruleSet.js";
 import Table from "@/table/table.js";
 
 class Bid {
@@ -9,7 +8,7 @@ class Bid {
   playerName: string;
 
   constructor(suit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump",
-  pass: boolean, rank: number, playerName: string) {
+    pass: boolean, rank: number, playerName: string) {
     if (typeof pass !== 'boolean') {
       throw new Error('Invalid value for pass');
     }
