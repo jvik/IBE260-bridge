@@ -62,11 +62,9 @@ class BidLog {
     const rankCheck = (bid.card?.rank ?? 0) <= (lastBid.card?.rank ?? 0);
 
     if (suitCheck) {
-      console.log("Suit too low");
-      throw new Error("Suit is too low");
+      throw new Error(`Suit is too low for bid. Last bid was ${lastBid.card?.toString()}`);
     }
     if (rankCheck && !suitCheck) {
-      console.log("Bid too low");
       throw new Error(`Bid is too low. Last bid was ${lastBid.card?.toString()}`);
     }
     return true;
