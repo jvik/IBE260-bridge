@@ -58,12 +58,12 @@ class Table {
 
   // This is a helper function to find a player by their direction
   getPlayerByDirection(direction: Direction): Player {
-    return this.players.find((player) => player.direction === direction);
+    return this.players.find((player) => player.direction === direction) as Player;
   }
 
   // This is a helper function to find a player by their name
   getPlayerByName(name: string): Player {
-    return this.players.find((player) => player.name === name);
+    return this.players.find((player) => player.name === name) as Player;
   }
 
   populate() {

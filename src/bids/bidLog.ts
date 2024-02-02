@@ -59,8 +59,8 @@ class BidLog {
   // This function compares the bid to the last bid in the bid log
   isNewBidLargerThanLastBid(bid: Bid): boolean {
     const lastBid = this.getLastBid();
-    const suitCheck = bid.card?.getSuitValue() < lastBid.card?.getSuitValue();
-    const rankCheck = bid.card?.rank <= lastBid.card?.rank;
+    const suitCheck = (bid.card?.getSuitValue() ?? 0) < (lastBid.card?.getSuitValue() ?? 0);
+    const rankCheck = (bid.card?.rank ?? 0) <= (lastBid.card?.rank ?? 0);
 
     if (suitCheck) {
       console.log("Suit too low");
@@ -74,10 +74,10 @@ class BidLog {
   }
 
   isBidMeaningKnown(bid: Bid): boolean {
-    if (bid.card.getRankValue() < 3) return true
+    if (bid.card && bid.card.getRankValue() < 3) return true;
     const ourTable = Table.getInstance();
     const tableRules = ourTable.getRules();
-    return tableRules.ruleSet.some(rule => rule.card.getSuitValue() === bid.card.getSuitValue() && rule.card.getRankValue() === bid.card.getRankValue());
+    return tableRules.ruleSet.some(rule => rule.card && rule.card.getSuitValue() === bid.card?.getSuitValue() && rule.card.getRankValue() === bid.card?.getRankValue());
   }
 
   // TODO: This logic is broken. Need to make something better
