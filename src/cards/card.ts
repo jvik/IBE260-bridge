@@ -83,6 +83,8 @@ class Card {
         return 3;
       case Suit.Spades:
         return 4;
+      default:
+        return 0; // Default value for unexpected cases
     }
   }
 }
