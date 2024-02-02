@@ -1,4 +1,4 @@
-type Direction = "North" | "South" | "East" | "West";
+export type Direction = "North" | "South" | "East" | "West";
 
 class Player {
   name: string;
