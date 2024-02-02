@@ -29,7 +29,6 @@ class BidLog {
       if (lastBidder && currentBidder) {
         const lastBidderIndex = players.indexOf(lastBidder);
         const currentBidderIndex = players.indexOf(currentBidder);
-        console.log(currentBidderIndex)
         if (lastBidderIndex === currentBidderIndex) {
           throw new Error("You can't bid out of turn");
         }

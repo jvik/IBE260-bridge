@@ -5,17 +5,10 @@ class Bid {
   playerName: string;
   card?: Card;
   pass: boolean;
-  notrump: boolean;
 
-  constructor(playerName: string, card?: Card, pass?: boolean, notrump?: boolean) {
+  constructor(playerName: string, card?: Card, pass?: boolean) {
     if (typeof pass !== 'boolean') {
       pass = false
-    }
-    if (typeof notrump !== 'boolean') {
-      notrump = false;
-    }
-    if (notrump && card) {
-      throw new Error('Cannot have a card and no trump');
     }
 
     const ourTable = Table.getInstance();
@@ -24,7 +17,6 @@ class Bid {
       throw new Error('Player not found');
     }
 
-    this.notrump = notrump;
     this.pass = pass;
     this.card = card;
     this.playerName = playerName;

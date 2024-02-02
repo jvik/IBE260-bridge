@@ -14,14 +14,14 @@ router.post('/bid', (req, res) => {
   const bidLog = BidLog.getInstance();
   let roundOver = bidLog.isBiddingOver();
 
-  const { card, pass, notrump, playerName } = req.body;
+  const { card, pass, playerName } = req.body;
 
   let ourCard = undefined;
   if (card?.suit && card?.rank) {
     ourCard = new Card(card.suit, card.rank);
   }
 
-  const bid = new Bid(playerName, ourCard, pass, notrump);
+  const bid = new Bid(playerName, ourCard, pass);
 
   bidLog.addBid(bid);
 
