@@ -25,10 +25,6 @@ class Deck {
     return this.cards;
   }
 
-  emptyDeck(): void {
-    this.cards = [];
-  }
-
   private initializeDeck(): void {
     for (const suit of Object.values(Suit)) {
       for (const rank of Object.values(Rank)) {
