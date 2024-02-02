@@ -1,6 +1,7 @@
 import express from 'express';
 import Bid from '@/bids/bid.js';
-import BidLog from './bidLog.js';
+import BidLog from '@/bids/bidLog.js';
+import Card from '@/cards/card.js';
 
 const router = express.Router();
 
@@ -13,17 +14,18 @@ router.post('/bid', (req, res) => {
   const bidLog = BidLog.getInstance();
   let roundOver = bidLog.isBiddingOver();
 
-  const { pass, suit, rank, playerName } = req.body;
-  const newBid = new Bid(suit, pass, rank, playerName);
+  const { card, pass, notrump, playerName } = req.body;
 
-  if (!roundOver) {
-    bidLog.addBid(newBid);
+  let ourCard = undefined;
+  if (card?.suit && card?.rank) {
+    ourCard = new Card(card.suit, card.rank);
   }
-  roundOver = bidLog.isBiddingOver();
 
-  console.log(req.body);
+  const bid = new Bid(playerName, ourCard, pass, notrump);
 
-  res.json({ roundOver });
+  bidLog.addBid(bid);
+
+  res.json({ bid, roundOver });
 });
 
 export default router;

@@ -1,5 +1,4 @@
 import Bid from "@/bids/bid.js";
-import RuleSet from "@/table/ruleSet.js";
 import Table from "@/table/table.js";
 
 class BidLog {
@@ -19,13 +18,31 @@ class BidLog {
   }
 
   addBid(bid: Bid) {
-    console.log(bid);
+    // Check that we're going the right way around the table
+    const ourTable = Table.getInstance();
+    const players = ourTable.getPlayers();
+    // Check if the bid is in turn
+    const lastBid = this.getLastBid() ?? undefined;
+    if (lastBid) {
+      const lastBidder = players.find(player => player.getName() === lastBid.playerName);
+      const currentBidder = players.find(player => player.getName() === bid.playerName);
+      if (lastBidder && currentBidder) {
+        const lastBidderIndex = players.indexOf(lastBidder);
+        const currentBidderIndex = players.indexOf(currentBidder);
+        console.log(currentBidderIndex)
+        if (lastBidderIndex === currentBidderIndex) {
+          throw new Error("You can't bid out of turn");
+        }
+        if ((lastBidderIndex + 1) % players.length !== currentBidderIndex) {
+          throw new Error("You can't bid out of turn");
+        }
+      }
+    }
+
     // Check if the bid is valid
     if (this.bidLog.length > 0 && !this.isNewBidLargerThanLastBid(bid)) {
       throw new Error("This bid is too low");
     }
-    try {console.log(this.isBidMeaningKnown(bid))}
-    catch {console.log("Issue with 'isBidMeaningKnown'.")}
     this.bidLog.push(bid);
   }
 
@@ -42,8 +59,8 @@ class BidLog {
   // This function compares the bid to the last bid in the bid log
   isNewBidLargerThanLastBid(bid: Bid): boolean {
     const lastBid = this.getLastBid();
-    const suitCheck = bid.getSuitValue() < lastBid.getSuitValue();
-    const rankCheck = bid.rank <= lastBid.rank;
+    const suitCheck = bid.card?.getSuitValue() < lastBid.card?.getSuitValue();
+    const rankCheck = bid.card?.rank <= lastBid.card?.rank;
 
     if (suitCheck) {
       console.log("Suit too low");
@@ -51,26 +68,27 @@ class BidLog {
     }
     if (rankCheck && !suitCheck) {
       console.log("Bid too low");
-      throw new Error("This bid is too low");
+      throw new Error(`Bid is too low. Last bid was ${lastBid.card?.toString()}`);
     }
     return true;
   }
 
-  isBidMeaningKnown(bid: Bid) : boolean {
-    if (bid.rank < 3) return true
+  isBidMeaningKnown(bid: Bid): boolean {
+    if (bid.card.getRankValue() < 3) return true
     const ourTable = Table.getInstance();
     const tableRules = ourTable.getRules();
-    return tableRules.ruleSet.some(rule => rule.suit === bid.suit && rule.rank === bid.rank);
+    return tableRules.ruleSet.some(rule => rule.card.getSuitValue() === bid.card.getSuitValue() && rule.card.getRankValue() === bid.card.getRankValue());
   }
 
-  // This helper function checks if the bidding is over
+  // TODO: This logic is broken. Need to make something better
   isBiddingOver(): boolean {
-    if (this.bidLog.length < 3) return false;
-    const lastThreeBids = this.bidLog.slice(-3);
-    const lastThreeBidsArePass = lastThreeBids.every(
-      (bid) => bid.pass === true
-    );
-    return lastThreeBidsArePass;
+    // if (this.bidLog.length < 3) return false;
+    // const lastThreeBids = this.bidLog.slice(-3);
+    // const lastThreeBidsArePass = lastThreeBids.every(
+    //   (bid) => bid.pass === true
+    // );
+    // return lastThreeBidsArePass;
+    return false
   }
 }
 
