@@ -30,7 +30,7 @@ class Table {
     // Check if a player with the same direction already exists
     const existingPlayerDirection = this.getPlayerByDirection(player.getDirection());
     if (existingPlayerDirection) {
-      throw new Error("The table already has a player in that direction");
+      throw new Error(`The table already has a player in the direction ${player.direction}`);
     }
 
     this.players.push(player);
