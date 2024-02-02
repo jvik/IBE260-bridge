@@ -35,14 +35,11 @@ class Table {
 
     this.players.push(player);
     const ourDeck = Deck.getInstance();
+    const ourTable = Table.getInstance();
     if (this.players.length === 4) {
-      let playerIndex = 0;
-      ourDeck.getCards().forEach(card => {
-        // Give each player 1 card in a round-robin fashion
-        this.players[playerIndex].addCard(card);
-        playerIndex = (playerIndex + 1) % this.players.length; // Move to the next player
+      ourTable.getPlayers().forEach(player => {
+        player.cards = ourDeck.dealHand(13);
       });
-      ourDeck.emptyDeck();
     }
   }
 
