@@ -8,7 +8,7 @@ class Bid {
   bidRank: number;
   pass: boolean;
 
-  constructor(playerName: string, bidSuit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump",
+  constructor(playerName: string, bidSuit: CardSuit,
     bidRank: number, pass?: boolean) {
     if (typeof pass !== 'boolean') {
       pass = false
