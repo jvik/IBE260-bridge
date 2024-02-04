@@ -1,5 +1,7 @@
 import Table from "@/table/table.js";
 
+export type CardSuit = "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
+
 class Bid {
   playerName: string;
   bidSuit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
