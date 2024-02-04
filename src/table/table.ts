@@ -1,5 +1,6 @@
 import Player, { Direction } from "@/players/player.js";
 import ruleSet from "./ruleSet.js";
+import Deck from "@/cards/deck.js";
 
 class Table {
   private static instance: Table;
@@ -21,18 +22,25 @@ class Table {
   // This is a helper function to add a player to the table
   addPlayer(player: Player) {
     // Check if a player with the same name already exists
-    const existingPlayer = this.findByName(player.name);
+    const existingPlayer = this.getPlayerByName(player.getName());
     if (existingPlayer) {
       throw new Error(`Player already exists with the name ${player.name}}`);
     }
 
     // Check if a player with the same direction already exists
-    const existingPlayerDirection = this.findByDirection(player.direction);
+    const existingPlayerDirection = this.getPlayerByDirection(player.getDirection());
     if (existingPlayerDirection) {
-      throw new Error("The table already has a player in that direction");
+      throw new Error(`The table already has a player in the direction ${player.direction}`);
     }
 
     this.players.push(player);
+    const ourDeck = Deck.getInstance();
+    const ourTable = Table.getInstance();
+    if (this.players.length === 4) {
+      ourTable.getPlayers().forEach(player => {
+        player.cards = ourDeck.dealHand(13);
+      });
+    }
   }
 
   // This is a helper function to get all players
@@ -46,13 +54,13 @@ class Table {
   }
 
   // This is a helper function to find a player by their direction
-  findByDirection(direction: Direction): Player {
-    return this.players.find((player) => player.direction === direction);
+  getPlayerByDirection(direction: Direction): Player {
+    return this.players.find((player) => player.direction === direction) as Player;
   }
 
   // This is a helper function to find a player by their name
-  findByName(name: string): Player {
-    return this.players.find((player) => player.name === name);
+  getPlayerByName(name: string): Player {
+    return this.players.find((player) => player.name === name) as Player;
   }
 
   populate() {

@@ -1,14 +1,13 @@
-class Rules {
-    suit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
-    rank: number;
-    rule: string;
+import Card from "@/cards/card.js";
 
-    constructor(suit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump",
-    rank: number, rule: string) {
-        this.suit = suit;
-        this.rank = rank;
-        this.rule = rule;
-    }
+class Rules {
+  card: Card;
+  rule: string;
+
+  constructor(card: Card, rule: string) {
+    this.card = card;
+    this.rule = rule;
+  }
 }
 
 export default Rules;
