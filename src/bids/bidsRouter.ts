@@ -21,7 +21,7 @@ router.post('/bid', (req, res) => {
   }
 
   let ourBid = undefined;
-  if (bid?.suit && bid?.rank) {
+  if ((bid?.suit && bid?.rank) || bid?.pass) {
     ourBid = new Bid(playerName, bid.suit, bid.rank, pass);
     if (!roundOver) {
       bidLog.addBid(ourBid);
