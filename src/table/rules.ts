@@ -1,7 +1,7 @@
 import { CardSuit } from "@/bids/bid.js";
 
 class Rules {
-  ruleSuit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
+  ruleSuit: CardSuit;
   ruleRank: number;
   rule: string;
 
