@@ -1,7 +1,6 @@
 import express from 'express';
 import Bid from '@/bids/bid.js';
 import BidLog from '@/bids/bidLog.js';
-import Card from '@/cards/card.js';
 import Table from '@/table/table.js';
 
 const router = express.Router();
@@ -12,7 +11,7 @@ router.get('/', (_req, res) => {
 });
 
 router.post('/bid', (req, res) => {
-  const { card, pass, playerName } = req.body;
+  const { bid, pass, playerName } = req.body;
   const bidLog = BidLog.getInstance();
   let roundOver = bidLog.isBiddingOver();
 
@@ -21,16 +20,16 @@ router.post('/bid', (req, res) => {
     throw new Error('The table is not full');
   }
 
-  let ourCard = undefined;
-  if (card?.suit && card?.rank) {
-    ourCard = new Card(card.suit, card.rank);
+  let ourBid = undefined;
+  if (bid?.suit && bid?.rank) {
+    ourBid = new Bid(playerName, bid.suit, bid.rank, pass);
+    if (!roundOver) {
+      bidLog.addBid(ourBid);
+    }
   }
-
-  const bid = new Bid(playerName, ourCard, pass);
-
-  bidLog.addBid(bid);
-
-  res.json({ bid, roundOver });
+  roundOver = bidLog.isBiddingOver();
+  // TODO: Server state -- wait for explanation
+  res.json({ ourBid, roundOver });
 });
 
 export default router;

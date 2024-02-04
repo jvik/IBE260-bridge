@@ -1,12 +1,13 @@
-import Card from "@/cards/card.js";
 import Table from "@/table/table.js";
 
 class Bid {
   playerName: string;
-  card?: Card;
+  bidSuit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
+  bidRank: number;
   pass: boolean;
 
-  constructor(playerName: string, card?: Card, pass?: boolean) {
+  constructor(playerName: string, bidSuit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump",
+    bidRank: number, pass?: boolean) {
     if (typeof pass !== 'boolean') {
       pass = false
     }
@@ -18,8 +19,26 @@ class Bid {
     }
 
     this.pass = pass;
-    this.card = card;
+    this.bidSuit = bidSuit;
+    this.bidRank = bidRank;
     this.playerName = playerName;
+  }
+
+  getBidSuitValue(): number {
+    switch (this.bidSuit) {
+      case "clubs":
+        return 1;
+      case "diamonds":
+        return 2;
+      case "hearts":
+        return 3;
+      case "spades":
+        return 4;
+      case "no-trump":
+        return 5;
+      default:
+        return 0; // Default value for unexpected cases
+    }
   }
 }
 

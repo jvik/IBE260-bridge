@@ -1,11 +1,11 @@
-import Card from "@/cards/card.js";
-
 class Rules {
-  card: Card;
+  ruleSuit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
+  ruleRank: number;
   rule: string;
 
-  constructor(card: Card, rule: string) {
-    this.card = card;
+  constructor(ruleSuit:"spades" | "hearts" | "diamonds" | "clubs" | "no-trump", ruleRank: number, rule: string ) {
+    this.ruleSuit = ruleSuit;
+    this.ruleRank = ruleRank;
     this.rule = rule;
   }
 }
