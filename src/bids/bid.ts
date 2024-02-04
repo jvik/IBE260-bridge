@@ -4,7 +4,7 @@ export type CardSuit = "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
 
 class Bid {
   playerName: string;
-  bidSuit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
+  bidSuit: CardSuit
   bidRank: number;
   pass: boolean;
 
