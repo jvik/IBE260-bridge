@@ -1,3 +1,5 @@
+import { CardSuit } from "@/bids/bid.js";
+
 class Rules {
   ruleSuit: "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
   ruleRank: number;
