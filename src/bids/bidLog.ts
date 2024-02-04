@@ -86,7 +86,6 @@ class BidLog {
       const lastThreeBidsArePass = lastThreeBids.every(
         (bid) => bid.pass === true
       );
-    console.log(lastThreeBidsArePass);
      return lastThreeBidsArePass;
   }
 }
