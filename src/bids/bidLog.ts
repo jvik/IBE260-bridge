@@ -58,14 +58,17 @@ class BidLog {
   // This function compares the bid to the last bid in the bid log
   isNewBidLargerThanLastBid(bid: Bid): boolean {
     const lastBid = this.getLastBid();
-    const suitCheck = (bid.getBidSuitValue ?? 0) < (lastBid.getBidSuitValue ?? 0);
-    const rankCheck = (bid.bidRank) <= (lastBid.bidRank ?? 0);
+    const suitCheck = (bid.getBidSuitValue() ?? 0) < (lastBid.getBidSuitValue() ?? 0);
+    const rankCheck = (bid.bidRank ?? 0) < (lastBid.bidRank ?? 0)
 
     if (suitCheck) {
       throw new Error(`Suit is too low for bid. Last bid was ${lastBid.bidSuit.toString()}`);
     }
     if (rankCheck && !suitCheck) {
       throw new Error(`Bid is too low. Last bid was ${lastBid.bidRank.toString()}`);
+    }
+    if (bid.bidRank === lastBid.bidRank && bid.bidSuit === lastBid.bidSuit) {
+      throw new Error(`Bid cannot be identical to previous bid. Last bid was ${lastBid.bidRank.toString()} of ${lastBid.bidSuit.toString()}.`)
     }
     return true;
   }

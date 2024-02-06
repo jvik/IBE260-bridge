@@ -19,7 +19,7 @@ router.post('/bid', (req, res) => {
   if (ourTable.getPlayers().length < 4) {
     throw new Error('The table is not full');
   }
-
+  
   let ourBid = undefined;
   if ((bid?.suit && bid?.rank) || bid?.pass) {
     ourBid = new Bid(playerName, bid.suit, bid.rank, pass);
