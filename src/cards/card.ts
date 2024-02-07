@@ -3,7 +3,6 @@ export enum Suit {
   Diamonds = "Diamonds",
   Hearts = "Hearts",
   Spades = "Spades",
-  Notrump = "Notrump",
 }
 
 export enum Rank {

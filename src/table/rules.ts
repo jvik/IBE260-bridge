@@ -1,11 +1,13 @@
-import Card from "@/cards/card.js";
+import { CardSuit } from "@/bids/bid.js";
 
 class Rules {
-  card: Card;
+  ruleSuit: CardSuit;
+  ruleRank: number;
   rule: string;
 
-  constructor(card: Card, rule: string) {
-    this.card = card;
+  constructor(ruleSuit: CardSuit, ruleRank: number, rule: string ) {
+    this.ruleSuit = ruleSuit;
+    this.ruleRank = ruleRank;
     this.rule = rule;
   }
 }
