@@ -4,7 +4,7 @@ import playersRouter from '@/players/playersRouter.js';
 import bidRouter from '@/bids/bidsRouter.js';
 import 'dotenv/config';
 import Table from '@/table/table.js';
-import rulesRouter from '@/table/rulesRouter.js'
+import rulesRouter from '@/rules/rulesRouter.js'
 import cardsRouter from '@/cards/cardsRouter.js'
 
 const app = express();
