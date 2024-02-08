@@ -28,8 +28,7 @@ class BidLog {
     // Check if the bid is valid
     if (this.bidLog.length > 0 && !this.isNewBidLargerThanLastBid(bid)) {
       throw new Error("This bid is too low");
-    } // Should this be moved earlier in the addBid function?
-
+    }
     if (lastBid) {
       const lastBidder = players.find(player => player.getPlayerName() === lastBid.playerName);
       const currentBidder = players.find(player => player.getPlayerName() === bid.playerName);

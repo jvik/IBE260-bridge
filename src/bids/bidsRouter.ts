@@ -26,19 +26,19 @@ router.post('/bid', (req, res) => {
   }
 
   let ourBid = undefined;
-
-  if (typeof bidLog.explainerName !== undefined) {
+  //if (typeof bidLog.explainerName === undefined) {
     if ((bid?.suit && bid?.rank) || bid?.pass) {
       ourBid = new Bid(playerName, bid.suit, bid.rank, pass);
       if (!roundOver) {
         bidLog.addBid(ourBid);
       }
     }
-  } else {
+  /*} /* else {
     const currPlayers = ourTable.getPlayers()
     const playerNames: string[] = currPlayers.map(player => player.name)
-  }
+  } */
   roundOver = bidLog.isBiddingOver();
+  console.log(bidLog)
   res.json({ ourBid, roundOver });
 });
 
