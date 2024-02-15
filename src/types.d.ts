@@ -1,4 +1,4 @@
 interface Bid {
-    player: string;
-    bid: string;
+  player: string;
+  bid: string;
 }

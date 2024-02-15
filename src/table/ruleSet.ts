@@ -1,24 +1,23 @@
 import Rules from "./rules.js";
 
 class ruleSet {
-    private static instance: ruleSet;
-    ruleSet: Rules[] = [];
-    
-    constructor() {
-        this.ruleSet = [];
-    }
+  private static instance: ruleSet;
+  ruleSet: Rules[] = [];
 
-    // Singleton pattern
-    static getInstance() {
-        if (!ruleSet.instance) {
-        ruleSet.instance = new ruleSet();
-        }
-        return ruleSet.instance;
+  constructor() {
+    this.ruleSet = [];
+  }
+
+  // Singleton pattern
+  static getInstance() {
+    if (!ruleSet.instance) {
+      ruleSet.instance = new ruleSet();
     }
-    addRule(rule: Rules) {
-        this.ruleSet.push(rule);
-    }
-    
+    return ruleSet.instance;
+  }
+  addRule(rule: Rules) {
+    this.ruleSet.push(rule);
+  }
 }
 
 export default ruleSet;

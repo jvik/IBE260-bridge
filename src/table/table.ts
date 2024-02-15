@@ -1,6 +1,6 @@
+import Deck from "@/cards/deck.js";
 import Player, { Direction } from "@/players/player.js";
 import ruleSet from "./ruleSet.js";
-import Deck from "@/cards/deck.js";
 
 class Table {
   private static instance: Table;
@@ -28,18 +28,22 @@ class Table {
     }
 
     // Check if a player with the same direction already exists
-    const existingPlayerDirection = this.getPlayerByDirection(player.getDirection());
+    const existingPlayerDirection = this.getPlayerByDirection(
+      player.getDirection(),
+    );
     if (existingPlayerDirection) {
-      throw new Error(`The table already has a player in the direction ${player.direction}`);
+      throw new Error(
+        `The table already has a player in the direction ${player.direction}`,
+      );
     }
 
     this.players.push(player);
     const ourDeck = Deck.getInstance();
     const ourTable = Table.getInstance();
     if (this.players.length === 4) {
-      ourTable.getPlayers().forEach(player => {
+      for (const player of ourTable.getPlayers()) {
         player.cards = ourDeck.dealHand(13);
-      });
+      }
     }
   }
 
@@ -55,7 +59,9 @@ class Table {
 
   // This is a helper function to find a player by their direction
   getPlayerByDirection(direction: Direction): Player {
-    return this.players.find((player) => player.direction === direction) as Player;
+    return this.players.find(
+      (player) => player.direction === direction,
+    ) as Player;
   }
 
   // This is a helper function to find a player by their name

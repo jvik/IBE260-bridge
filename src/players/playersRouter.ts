@@ -1,15 +1,15 @@
-import express from 'express';
-import Player from '@/players/player.js';
-import Table from '@/table/table.js';
+import Player from "@/players/player.js";
+import Table from "@/table/table.js";
+import express from "express";
 
 const router = express.Router();
 
-router.get('/', (_req, res) => {
+router.get("/", (_req, res) => {
   const ourTable = Table.getInstance();
   res.send(ourTable.getPlayers());
 });
 
-router.post('/register', (req, res) => {
+router.post("/register", (req, res) => {
   const { name, direction } = req.body;
 
   const ourTable = Table.getInstance();
@@ -17,7 +17,6 @@ router.post('/register', (req, res) => {
   const ourPlayer = new Player(name, direction);
   ourTable.addPlayer(ourPlayer);
 
-  console.log("Player added to table");
   res.json(ourPlayer);
 });
 
