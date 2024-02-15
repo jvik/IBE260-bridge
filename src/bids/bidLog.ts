@@ -26,7 +26,10 @@ class BidLog {
     // Check if the bid is in turn
     const lastBid = this.getLastBid() ?? undefined;
     // Check if the bid is valid
-    if (this.bidLog.length > 0 && !this.isNewBidLargerThanLastBid(bid)) {
+
+    // If bids rank and suit value are both 0, that means we have a pass
+    // Passes mean you need to skip the isNewBidLargerThanLastBid line
+    if ((bid.bidSuit !== undefined && bid.bidRank !== undefined) && this.bidLog.length > 0 && !this.isNewBidLargerThanLastBid(bid)) {
       throw new Error("This bid is too low");
     }
     if (lastBid) {
