@@ -1,4 +1,4 @@
-import { CardSuit } from "@/bids/bid.js";
+import { CardSuit } from "../bids/bid.js";
 
 class Rules {
   ruleSuit: CardSuit;

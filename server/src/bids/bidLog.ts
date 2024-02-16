@@ -1,5 +1,5 @@
-import Bid from "@/bids/bid.js";
-import Table from "@/table/table.js";
+import Bid from "../bids/bid.js";
+import Table from "../table/table.js";
 
 class BidLog {
   private static instance: BidLog;

@@ -1,5 +1,5 @@
-import Deck from "@/cards/deck.js";
-import Player, { Direction } from "@/players/player.js";
+import Deck from "../cards/deck.js";
+import Player, { Direction } from "../players/player.js";
 import ruleSet from "../rules/ruleSet.js";
 
 class Table {
