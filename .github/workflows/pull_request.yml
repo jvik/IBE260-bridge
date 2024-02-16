@@ -25,5 +25,4 @@ jobs:
       working-directory: ./server
       run: |
         # Assuming 'biome' is the command you want to run
-        set -e
         npm run lint
