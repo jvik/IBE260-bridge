@@ -1,17 +1,8 @@
-import Rules from "./rules.js";
+import Rule from "./rules.js";
 
 class ruleSet {
-<<<<<<< HEAD:src/table/ruleSet.ts
   private static instance: ruleSet;
-  ruleSet: Rules[] = [];
-=======
-    private static instance: ruleSet;
-    ruleSet: Rules[] = [];
-
-    constructor() {
-        this.ruleSet = [];
-    }
->>>>>>> main:src/rules/ruleSet.ts
+  ruleSet: Rule[] = [];
 
   constructor() {
     this.ruleSet = [];
@@ -22,17 +13,11 @@ class ruleSet {
     if (!ruleSet.instance) {
       ruleSet.instance = new ruleSet();
     }
-<<<<<<< HEAD:src/table/ruleSet.ts
-    return ruleSet.instance;
   }
-  addRule(rule: Rules) {
+
+  addRule(rule: Rule): void {
     this.ruleSet.push(rule);
   }
-=======
-    addRule(rule: Rules) {
-        this.ruleSet.push(rule);
-    }
->>>>>>> main:src/rules/ruleSet.ts
 }
 
 export default ruleSet;
