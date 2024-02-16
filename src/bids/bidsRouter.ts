@@ -2,6 +2,7 @@ import express from 'express';
 import Bid from '@/bids/bid.js';
 import BidLog from '@/bids/bidLog.js';
 import Table from '@/table/table.js';
+import Rules from '@/rules/rules.js';
 
 const router = express.Router();
 
@@ -19,35 +20,40 @@ router.post('/bid', (req, res) => {
   if (ourTable.getPlayers().length < 4) {
     throw new Error('The table is not full');
   }
+  if (roundOver) {
+    throw new Error("Round is over");
+  }
   let rule = bid?.rule; // quick check to look for existing rule
   // if explainerName exists, and bid lacking explanation:
   if (bidLog.explainerName !== undefined && rule === undefined) {
     throw new Error(`Meaning of the bid must be specified by ${bidLog.explainerName}!`)
   }
-  bidLog.explainerName = "Player 2" // defined after statement obv. has different outcome ^
   let ourBid = undefined;
-  if (typeof bidLog.explainerName !== undefined) {
-    if (bid?.suit && bid?.rank) {
-      ourBid = new Bid(playerName, bid.suit, bid.rank, pass);
-      if (!roundOver) {
-        bidLog.addBid(ourBid);
-      }
-    } // code is "repeated" because I'm dumb.
-    if (pass) {
+  if (bidLog.explainerName === undefined) {
+    if ((bid?.suit && bid?.rank) || pass) {
       ourBid = new Bid(playerName, bid?.suit, bid?.rank, pass);
-      console.log(ourBid)
-      if (!roundOver) {
-        bidLog.addBid(ourBid);
+      bidLog.addBid(ourBid);
+
+      // TODO: REMOVE COMMENTS
+      // If the bid is not known, invoke partner explanation target for next round?
+      if (!pass && !bidLog.isBidMeaningKnown(ourBid)) {
+        // Here the logic for setting a player should be implemented.
+        bidLog.explainerName = "Player 3" // for testing only
       }
     }
-  } else {
+  } else { // clear explainerName if it is valid and explains?
     const currPlayers = ourTable.getPlayers()
     const playerNames: string[] = currPlayers.map(player => player.name)
-    console.log(playerNames)
+    // "failproofing"
+    if (bidLog.explainerName == playerName && rule) {
+      let ourRule = new Rules(bid.suit, bid.rank, rule)
+      ourTable.tableRules.addRule(ourRule);
+      bidLog.explainerName = undefined;
+    }
   }
-  roundOver = bidLog.isBiddingOver();
+  console.log(ourTable.getRules())
   console.log(bidLog)
-  res.json({ ourBid, roundOver });
+  res.json({ ourBid});
 });
 
 export default router;

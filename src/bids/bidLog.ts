@@ -82,13 +82,14 @@ class BidLog {
     if (bid && bid.bidRank < 3) return true;
     const ourTable = Table.getInstance();
     const tableRules = ourTable.getRules();
+    //console.log(tableRules.ruleSet) // TODO: REMOVE CONSOLE.LOG
     return tableRules.ruleSet.some(rule => rule.rule && rule.ruleSuit === bid.bidSuit && rule.ruleRank === bid.bidRank);
   }
 
   isBiddingOver(): boolean {
     if (this.bidLog.length < 4) return false;
       const lastThreeBids = this.bidLog.slice(-3);
-      console.log(lastThreeBids);
+      console.log(lastThreeBids); // TODO: REMOVE CONSOLE.LOG
       const lastThreeBidsArePass = lastThreeBids.every(
         (bid) => bid.pass === true
       );

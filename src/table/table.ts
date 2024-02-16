@@ -9,6 +9,7 @@ class Table {
 
   constructor() {
     this.players = [];
+    this.tableRules = ruleSet.getInstance();
   }
 
   // Since we only want one instance of Table, we use a singleton pattern
