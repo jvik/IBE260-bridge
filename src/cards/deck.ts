@@ -1,5 +1,5 @@
 import Card from "@/cards/card.js";
-import { Suit, Rank } from "@/cards/card.js";
+import { Rank, Suit } from "@/cards/card.js";
 
 class Deck {
   private static instance: Deck;
@@ -28,7 +28,7 @@ class Deck {
   private initializeDeck(): void {
     for (const suit of Object.values(Suit)) {
       for (const rank of Object.values(Rank)) {
-        this.cards.push(new Card(suit as Suit, rank as Rank,));
+        this.cards.push(new Card(suit as Suit, rank as Rank));
       }
     }
   }

@@ -17,7 +17,6 @@ class Player {
     return this.name;
   }
 
-
   getDirection(): Direction {
     return this.direction;
   }
