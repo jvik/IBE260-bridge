@@ -29,8 +29,9 @@ router.post('/bid', (req, res) => {
     throw new Error(`Meaning of the bid must be specified by ${bidLog.explainerName}!`)
   }
   let ourBid = undefined;
+  let suitAndRankExists = bid?.suit && bid?.rank;
   if (bidLog.explainerName === undefined) {
-    if ((bid?.suit && bid?.rank) || pass) {
+    if (suitAndRankExists || pass) {
       ourBid = new Bid(playerName, bid?.suit, bid?.rank, pass);
       bidLog.addBid(ourBid);
 
@@ -41,17 +42,16 @@ router.post('/bid', (req, res) => {
         bidLog.explainerName = "Player 3" // for testing only
       }
     }
-  } else { // clear explainerName if it is valid and explains?
+  } else { // TODO : 2 lines below may be unnecessary, for review!
     const currPlayers = ourTable.getPlayers()
     const playerNames: string[] = currPlayers.map(player => player.name)
-    // "failproofing"
-    if (bidLog.explainerName == playerName && rule) {
-      let ourRule = new Rules(bid.suit, bid.rank, rule)
-      ourTable.tableRules.addRule(ourRule);
-      bidLog.explainerName = undefined;
+    // If bid suit and rank are defined, name matches & has a rule:
+    if (suitAndRankExists && (bidLog.explainerName == playerName) && rule) {
+      let ourRule = new Rules(bid.suit, bid.rank, rule) // new rule
+      ourTable.tableRules.addRule(ourRule);             // add rule
+      bidLog.explainerName = undefined;          // reset explainer
     }
   }
-  console.log(ourTable.getRules())
   console.log(bidLog)
   res.json({ ourBid});
 });
