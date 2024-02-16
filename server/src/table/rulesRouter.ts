@@ -1,4 +1,4 @@
-import Table from "@/table/table.js";
+import Table from "../table/table.js";
 import express from "express";
 
 const router = express.Router();
