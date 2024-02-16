@@ -1,11 +1,8 @@
 name: Build and Push Docker Image
 
 on:
-  push:
-    branches:
-      - main
-      - added-dev-containers # for testing purposes
-  workflow_dispatch: # Enables manual triggering
+  release:
+    types: [published]
 
 jobs:
   build:
