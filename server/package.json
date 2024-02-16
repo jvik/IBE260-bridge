@@ -9,7 +9,7 @@
     "dev": "tsx watch ./src/main.ts",
     "clean": "rimraf coverage build tmp",
     "build": "tsc -p tsconfig.json",
-    "lint": "biome check --error-on-wanrings ./src",
+    "lint": "biome check --error-on-warnings ./src",
     "lint:fix": "biome check --apply ./src"
   },
   "repository": {
