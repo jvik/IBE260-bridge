@@ -1,0 +1,9 @@
+{
+    "name": "Node Container",
+    "dockerComposeFile": [
+        "../../docker-compose.yml"
+    ],
+    "service": "client",
+    "shutdownAction": "none",
+    "workspaceFolder": "/workspace/client"
+}
