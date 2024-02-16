@@ -9,10 +9,11 @@ class ruleSet {
   }
 
   // Singleton pattern
-  static getInstance() {
+  static getInstance(): ruleSet {
     if (!ruleSet.instance) {
       ruleSet.instance = new ruleSet();
     }
+    return ruleSet.instance;
   }
 
   addRule(rule: Rule): void {
