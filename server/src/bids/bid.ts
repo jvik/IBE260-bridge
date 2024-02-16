@@ -4,23 +4,30 @@ export type CardSuit = "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
 
 class Bid {
   playerName: string;
-  bidSuit: CardSuit
+  bidSuit: CardSuit;
   bidRank: number;
   pass: boolean;
 
-  constructor(playerName: string, bidSuit: CardSuit,
-    bidRank: number, pass?: boolean) {
-    if (typeof pass !== 'boolean') {
-      pass = false
+  constructor(
+    playerName: string,
+    bidSuit: CardSuit,
+    bidRank: number,
+    pass?: boolean,
+  ) {
+    let shouldWePass = pass;
+    if (typeof pass !== "boolean") {
+      shouldWePass = false;
+    } else {
+      shouldWePass = pass;
     }
 
     const ourTable = Table.getInstance();
     const myPlayer = ourTable.getPlayerByName(playerName);
     if (!myPlayer) {
-      throw new Error('Player not found');
+      throw new Error("Player not found");
     }
 
-    this.pass = pass;
+    this.pass = shouldWePass;
     this.bidSuit = bidSuit;
     this.bidRank = bidRank;
     this.playerName = playerName;
