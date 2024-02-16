@@ -98,7 +98,7 @@ class BidLog {
     if (bid && bid.bidRank < 3) return true;
     const ourTable = Table.getInstance();
     const tableRules = ourTable.getRules();
-    console.log(tableRules.ruleSet); // TODO: REMOVE CONSOLE.LOG
+    // console.log(tableRules.ruleSet); // TODO: REMOVE CONSOLE.LOG
     return tableRules.ruleSet.some(
       (rule) =>
         rule.rule &&
