@@ -18,9 +18,11 @@ jobs:
         node-version: 20
 
     - name: Install Dependencies
+      working-directory: ./server
       run: npm install
 
     - name: Run Biome
+      working-directory: ./server
       run: |
         # Assuming 'biome' is the command you want to run
         npm run lint
