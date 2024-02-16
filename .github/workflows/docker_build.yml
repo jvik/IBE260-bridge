@@ -1,0 +1,36 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+      - added-dev-containers # for testing purposes
+  workflow_dispatch: # Enables manual triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    # - name: Install Dependencies
+    #   working-directory: ./server
+    #   run: npm install
+
+    - name: Build Docker Image
+      working-directory: ./server
+      run: |
+        docker build -t jvik/IBE260-bridge:latest .
+
+    # - name: Log in to Docker Hub
+    #   run: docker login -u your_username -p ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # - name: Push Docker Image
+    #   run: docker push your_username/your_repository:your_tag
