@@ -9,7 +9,7 @@
     "dev": "tsx watch ./src/main.ts",
     "clean": "rimraf coverage build tmp",
     "build": "tsc -p tsconfig.json",
-    "lint": "biome check ./src"
+    "lint": "biome check --apply ./src"
   },
   "repository": {
     "type": "git",

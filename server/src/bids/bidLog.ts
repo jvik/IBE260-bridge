@@ -110,7 +110,7 @@ class BidLog {
   isBiddingOver(): boolean {
     if (this.bidLog.length < 4) return false;
     const lastThreeBids = this.bidLog.slice(-3);
-    console.log(lastThreeBids); // TODO: REMOVE CONSOLE.LOG
+    // console.log(lastThreeBids); // TODO: REMOVE CONSOLE.LOG
     const lastThreeBidsArePass = lastThreeBids.every(
       (bid) => bid.pass === true,
     );
