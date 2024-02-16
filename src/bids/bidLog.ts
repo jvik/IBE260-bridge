@@ -4,9 +4,11 @@ import Table from "@/table/table.js";
 class BidLog {
   private static instance: BidLog;
   bidLog: Bid[] = [];
+  explainerName: string | undefined;
 
   constructor() {
     this.bidLog = [];
+    this.explainerName = undefined;
   }
 
   // Singleton pattern
@@ -23,9 +25,16 @@ class BidLog {
     const players = ourTable.getPlayers();
     // Check if the bid is in turn
     const lastBid = this.getLastBid() ?? undefined;
+    // Check if the bid is valid
+
+    // If bids rank and suit value are both 0, that means we have a pass
+    // Passes mean you need to skip the isNewBidLargerThanLastBid line
+    if ((bid.bidSuit !== undefined && bid.bidRank !== undefined) && this.bidLog.length > 0 && !this.isNewBidLargerThanLastBid(bid)) {
+      throw new Error("This bid is too low");
+    }
     if (lastBid) {
-      const lastBidder = players.find(player => player.getName() === lastBid.playerName);
-      const currentBidder = players.find(player => player.getName() === bid.playerName);
+      const lastBidder = players.find(player => player.getPlayerName() === lastBid.playerName);
+      const currentBidder = players.find(player => player.getPlayerName() === bid.playerName);
       if (lastBidder && currentBidder) {
         const lastBidderIndex = players.indexOf(lastBidder);
         const currentBidderIndex = players.indexOf(currentBidder);
@@ -38,10 +47,6 @@ class BidLog {
       }
     }
 
-    // Check if the bid is valid
-    if (this.bidLog.length > 0 && !this.isNewBidLargerThanLastBid(bid)) {
-      throw new Error("This bid is too low");
-    }
     this.bidLog.push(bid);
   }
 
@@ -68,7 +73,7 @@ class BidLog {
       throw new Error(`Bid is too low. Last bid was ${lastBid.bidRank.toString()}`);
     }
     if (bid.bidRank === lastBid.bidRank && bid.bidSuit === lastBid.bidSuit) {
-      throw new Error(`Bid cannot be identical to previous bid. Last bid was ${lastBid.bidRank.toString()} of ${lastBid.bidSuit.toString()}.`)
+      throw new Error(`Bid cannot be identical to previous bid. Last bid was also ${lastBid.bidRank.toString()} of ${lastBid.bidSuit.toString()}.`)
     }
     return true;
   }
@@ -77,15 +82,14 @@ class BidLog {
     if (bid && bid.bidRank < 3) return true;
     const ourTable = Table.getInstance();
     const tableRules = ourTable.getRules();
+    //console.log(tableRules.ruleSet) // TODO: REMOVE CONSOLE.LOG
     return tableRules.ruleSet.some(rule => rule.rule && rule.ruleSuit === bid.bidSuit && rule.ruleRank === bid.bidRank);
   }
 
-  // TODO: This logic is broken. Need to make something better
-  // Update: Logic should work now, confirm?
   isBiddingOver(): boolean {
     if (this.bidLog.length < 4) return false;
       const lastThreeBids = this.bidLog.slice(-3);
-      console.log(lastThreeBids);
+      console.log(lastThreeBids); // TODO: REMOVE CONSOLE.LOG
       const lastThreeBidsArePass = lastThreeBids.every(
         (bid) => bid.pass === true
       );

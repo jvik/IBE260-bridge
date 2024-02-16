@@ -1,5 +1,5 @@
 import Player, { Direction } from "@/players/player.js";
-import ruleSet from "./ruleSet.js";
+import ruleSet from "../rules/ruleSet.js";
 import Deck from "@/cards/deck.js";
 
 class Table {
@@ -9,6 +9,7 @@ class Table {
 
   constructor() {
     this.players = [];
+    this.tableRules = ruleSet.getInstance();
   }
 
   // Since we only want one instance of Table, we use a singleton pattern
@@ -22,7 +23,7 @@ class Table {
   // This is a helper function to add a player to the table
   addPlayer(player: Player) {
     // Check if a player with the same name already exists
-    const existingPlayer = this.getPlayerByName(player.getName());
+    const existingPlayer = this.getPlayerByName(player.getPlayerName());
     if (existingPlayer) {
       throw new Error(`Player already exists with the name ${player.name}}`);
     }
