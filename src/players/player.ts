@@ -13,11 +13,7 @@ class Player {
   }
 
   // This is a helper function to get the player's name
-  getPlayer(): string {
-    return this.name;
-  }
-
-  getName(): string {
+  getPlayerName(): string {
     return this.name;
   }
 
