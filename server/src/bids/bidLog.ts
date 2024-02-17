@@ -44,19 +44,24 @@ class BidLog {
         (player) => player.getPlayerName() === bid.playerName,
       );
       if (lastBidder && currentBidder) {
-        console.log("Lastbidder: ", lastBidder.getPlayerName())
-        console.log("Currentbidder: ", currentBidder.getPlayerName())
+        //console.log("Lastbidder: ", lastBidder.getPlayerName())
+        //console.log("Currentbidder: ", currentBidder.getPlayerName())
         const lastBidderIndex = players.indexOf(lastBidder);
         const currentBidderIndex = players.indexOf(currentBidder);
         if (lastBidderIndex === currentBidderIndex) {
-          throw new Error(`You can't bid out of turn, ${lastBidder.getPlayerName()}, it's ${currentBidder.getPlayerName()}'s turn!`);
+          throw new Error(
+            `You can't bid out of turn, ${lastBidder.getPlayerName()}, it's ${currentBidder.getPlayerName()}'s turn!`,
+          );
         }
         // I broke this error, I think.
-        if (!(lastBid.bidRank && lastBid.bidSuit) && (lastBidderIndex + 1) % players.length !== currentBidderIndex) {
+        if (
+          !(lastBid.bidRank && lastBid.bidSuit) &&
+          (lastBidderIndex + 1) % players.length !== currentBidderIndex
+        ) {
           throw new Error(`You can't bid out of turn, 12345`);
         }
         if ((lastBidderIndex + 1) % players.length !== currentBidderIndex) {
-          throw new Error(`Bidding out of turn!`)
+          throw new Error("Bidding out of turn!");
         }
       }
     }
@@ -70,16 +75,16 @@ class BidLog {
   }
 
   // This function returns the last bid in the bid log
-  getLastBid() : Bid {
+  getLastBid(): Bid {
     for (let i = this.bidLog.length - 1; i >= 0; i--) {
-        const bid = this.bidLog[i];
-        if (bid.bidSuit !== undefined && bid.bidRank !== undefined) {
-            return bid;
-        }
+      const bid = this.bidLog[i];
+      if (bid.bidSuit !== undefined && bid.bidRank !== undefined) {
+        return bid;
+      }
     }
     // If no non-pass bid is found
     return this.bidLog[this.bidLog.length - 1]; // this is probably bad :s
-}
+  }
 
   /* getLastBid(): Bid { // Legacy
     return this.bidLog[this.bidLog.length - 1];
@@ -91,8 +96,8 @@ class BidLog {
     const suitCheck =
       (bid.getBidSuitValue() ?? 0) < (lastBid.getBidSuitValue() ?? 0);
     const rankCheck = (bid.bidRank ?? 0) < (lastBid.bidRank ?? 0);
-    console.log("Current", bid)
-    console.log("Previous", lastBid)
+    //console.log("Current", bid)
+    //console.log("Previous", lastBid)
     if (suitCheck) {
       throw new Error(
         `Suit is too low for bid. Last bid was ${lastBid.bidSuit.toString()}`,
@@ -108,7 +113,13 @@ class BidLog {
         `Bid cannot be identical to previous bid. Last bid was also ${lastBid.bidRank.toString()} of ${lastBid.bidSuit.toString()}.`,
       );
     }
-    if ((lastBid.pass !== true  && !(bid.bidRank && bid.bidSuit) && bid.pass !== false) ) {return false}
+    if (
+      lastBid.pass !== true &&
+      !(bid.bidRank && bid.bidSuit) &&
+      bid.pass !== false
+    ) {
+      return false;
+    }
     return true;
   }
 
