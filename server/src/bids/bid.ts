@@ -1,4 +1,4 @@
-import Table from "@/table/table.js";
+import Table from "../table/table.js";
 
 export type CardSuit = "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
 

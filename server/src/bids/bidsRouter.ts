@@ -1,8 +1,8 @@
-import Bid from "@/bids/bid.js";
-import BidLog from "@/bids/bidLog.js";
-import Rules from "@/rules/rules.js";
-import Table from "@/table/table.js";
 import express from "express";
+import Bid from "../bids/bid.js";
+import BidLog from "../bids/bidLog.js";
+import Rules from "../rules/rules.js";
+import Table from "../table/table.js";
 
 const router = express.Router();
 
@@ -46,16 +46,16 @@ router.post("/bid", (req, res) => {
     }
   } else {
     // TODO : 2 lines below may be unnecessary, for review!
-    const currPlayers = ourTable.getPlayers();
-    const playerNames: string[] = currPlayers.map((player) => player.name);
+    // const currPlayers = ourTable.getPlayers();
+    // const playerNames: string[] = currPlayers.map((player) => player.name);
     // If bid suit and rank are defined, name matches & has a rule:
-    if (suitAndRankExists && bidLog.explainerName == playerName && rule) {
+    if (suitAndRankExists && bidLog.explainerName === playerName && rule) {
       const ourRule = new Rules(bid.suit, bid.rank, rule); // new rule
       ourTable.tableRules.addRule(ourRule); // add rule
       bidLog.explainerName = undefined; // reset explainer
     }
   }
-  console.log(bidLog);
+  // console.log(bidLog);
   res.json({ ourBid });
 });
 

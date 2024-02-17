@@ -1,5 +1,5 @@
-import Table from "@/table/table.js";
 import express from "express";
+import Table from "../table/table.js";
 
 const router = express.Router();
 

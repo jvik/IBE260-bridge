@@ -1,5 +1,5 @@
-import Card from "@/cards/card.js";
-import { Rank, Suit } from "@/cards/card.js";
+import Card from "../cards/card.js";
+import { Rank, Suit } from "../cards/card.js";
 
 class Deck {
   private static instance: Deck;

@@ -1,4 +1,4 @@
-import Card from "@/cards/card.js";
+import Card from "../cards/card.js";
 
 export type Direction = "North" | "South" | "East" | "West";
 

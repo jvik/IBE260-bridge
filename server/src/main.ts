@@ -1,11 +1,11 @@
-import bidRouter from "@/bids/bidsRouter.js";
-import cardsRouter from "@/cards/cardsRouter.js";
-import playersRouter from "@/players/playersRouter.js";
-import rulesRouter from "@/rules/rulesRouter.js";
-import Table from "@/table/table.js";
 import bodyParser from "body-parser";
 import "dotenv/config";
 import express from "express";
+import bidRouter from "./bids/bidsRouter.js";
+import cardsRouter from "./cards/cardsRouter.js";
+import playersRouter from "./players/playersRouter.js";
+import rulesRouter from "./rules/rulesRouter.js";
+import Table from "./table/table.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
