@@ -1,6 +1,13 @@
 import Card from "../cards/card.js";
 
-export type Direction = "North" | "South" | "East" | "West";
+// export type Direction = "North" | "South" | "East" | "West"; legacy
+export enum Direction {
+  North,
+  South,
+  East,
+  West,
+}
+export const { North, South, East, West } = Direction;
 
 class Player {
   name: string;

@@ -28,7 +28,6 @@ class BidLog {
     // Check if the bid is valid
 
     // If bids rank and suit value are both 0, that means we have a pass
-    // Passes mean you need to skip the isNewBidLargerThanLastBid line
     if (
       bid.bidSuit !== undefined &&
       bid.bidRank !== undefined &&
@@ -45,13 +44,19 @@ class BidLog {
         (player) => player.getPlayerName() === bid.playerName,
       );
       if (lastBidder && currentBidder) {
+        console.log("Lastbidder: ", lastBidder.getPlayerName())
+        console.log("Currentbidder: ", currentBidder.getPlayerName())
         const lastBidderIndex = players.indexOf(lastBidder);
         const currentBidderIndex = players.indexOf(currentBidder);
         if (lastBidderIndex === currentBidderIndex) {
-          throw new Error("You can't bid out of turn");
+          throw new Error(`You can't bid out of turn, ${lastBidder.getPlayerName()}, it's ${currentBidder.getPlayerName()}'s turn!`);
+        }
+        // I broke this error, I think.
+        if (!(lastBid.bidRank && lastBid.bidSuit) && (lastBidderIndex + 1) % players.length !== currentBidderIndex) {
+          throw new Error(`You can't bid out of turn, 12345`);
         }
         if ((lastBidderIndex + 1) % players.length !== currentBidderIndex) {
-          throw new Error("You can't bid out of turn");
+          throw new Error(`Bidding out of turn!`)
         }
       }
     }
@@ -65,9 +70,20 @@ class BidLog {
   }
 
   // This function returns the last bid in the bid log
-  getLastBid(): Bid {
+  getLastBid() : Bid {
+    for (let i = this.bidLog.length - 1; i >= 0; i--) {
+        const bid = this.bidLog[i];
+        if (bid.bidSuit !== undefined && bid.bidRank !== undefined) {
+            return bid;
+        }
+    }
+    // If no non-pass bid is found
+    return this.bidLog[this.bidLog.length - 1]; // this is probably bad :s
+}
+
+  /* getLastBid(): Bid { // Legacy
     return this.bidLog[this.bidLog.length - 1];
-  }
+  } */
 
   // This function compares the bid to the last bid in the bid log
   isNewBidLargerThanLastBid(bid: Bid): boolean {
@@ -75,7 +91,8 @@ class BidLog {
     const suitCheck =
       (bid.getBidSuitValue() ?? 0) < (lastBid.getBidSuitValue() ?? 0);
     const rankCheck = (bid.bidRank ?? 0) < (lastBid.bidRank ?? 0);
-
+    console.log("Current", bid)
+    console.log("Previous", lastBid)
     if (suitCheck) {
       throw new Error(
         `Suit is too low for bid. Last bid was ${lastBid.bidSuit.toString()}`,
@@ -91,6 +108,7 @@ class BidLog {
         `Bid cannot be identical to previous bid. Last bid was also ${lastBid.bidRank.toString()} of ${lastBid.bidSuit.toString()}.`,
       );
     }
+    if ((lastBid.pass !== true  && !(bid.bidRank && bid.bidSuit) && bid.pass !== false) ) {return false}
     return true;
   }
 
@@ -98,7 +116,6 @@ class BidLog {
     if (bid && bid.bidRank < 3) return true;
     const ourTable = Table.getInstance();
     const tableRules = ourTable.getRules();
-    // console.log(tableRules.ruleSet); // TODO: REMOVE CONSOLE.LOG
     return tableRules.ruleSet.some(
       (rule) =>
         rule.rule &&
@@ -110,7 +127,6 @@ class BidLog {
   isBiddingOver(): boolean {
     if (this.bidLog.length < 4) return false;
     const lastThreeBids = this.bidLog.slice(-3);
-    // console.log(lastThreeBids); // TODO: REMOVE CONSOLE.LOG
     const lastThreeBidsArePass = lastThreeBids.every(
       (bid) => bid.pass === true,
     );

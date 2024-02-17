@@ -41,21 +41,33 @@ router.post("/bid", (req, res) => {
       // If the bid is not known, invoke partner explanation target for next round?
       if (!pass && !bidLog.isBidMeaningKnown(ourBid)) {
         // Here the logic for setting a player should be implemented.
-        bidLog.explainerName = "Player 3"; // for testing only
+        let toSelectPartnerOf = ourTable.getPlayerByName(playerName)
+        let dir = toSelectPartnerOf.getDirection()
+        let playerToSelect = ourTable.selectOppositePlayer(dir)
+        if (playerToSelect) {
+          bidLog.explainerName = playerToSelect.getPlayerName()
+        }
+        //bidLog.explainerName = ourTable.selectOppositePlayer()
+        //bidLog.explainerName = "Player 3"; // for testing only
       }
     }
   } else {
-    // TODO : 2 lines below may be unnecessary, for review!
-    // const currPlayers = ourTable.getPlayers();
-    // const playerNames: string[] = currPlayers.map((player) => player.name);
     // If bid suit and rank are defined, name matches & has a rule:
     if (suitAndRankExists && bidLog.explainerName === playerName && rule) {
       const ourRule = new Rules(bid.suit, bid.rank, rule); // new rule
+      if (ourTable.tableRules.ruleAlreadyExists(ourRule)) {
+        throw new Error(`Rule already exists for this table.`)
+      }
+      // if rule explanation doesnt match our previous bid, error.
+      let lastBid = bidLog.getLastBid()
+      if (lastBid.bidSuit != ourRule.ruleSuit || lastBid.bidRank != ourRule.ruleRank) {
+        throw new Error(`Rule for ${lastBid.bidRank} of ${lastBid.bidSuit} was expected.`)
+      }
       ourTable.tableRules.addRule(ourRule); // add rule
       bidLog.explainerName = undefined; // reset explainer
     }
   }
-  // console.log(bidLog);
+  console.log(bidLog);
   res.json({ ourBid });
 });
 

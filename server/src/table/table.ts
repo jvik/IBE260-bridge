@@ -1,5 +1,5 @@
 import Deck from "../cards/deck.js";
-import Player, { Direction } from "../players/player.js";
+import Player, { Direction, North, South, West, East} from "../players/player.js";
 import ruleSet from "../rules/ruleSet.js";
 
 class Table {
@@ -37,7 +37,6 @@ class Table {
         `The table already has a player in the direction ${player.direction}`,
       );
     }
-
     this.players.push(player);
     const ourDeck = Deck.getInstance();
     const ourTable = Table.getInstance();
@@ -70,11 +69,43 @@ class Table {
     return this.players.find((player) => player.name === name) as Player;
   }
 
+  // This is a function that selects a player's partner
+  selectOppositePlayer(direction: Direction): Player | undefined {
+    const oppositeDirection = (direction + 2) % 4;
+    //console.log(oppositeDirection)
+    return this.getPlayerByDirection(oppositeDirection)
+  }
+  // Test function: Returns true if all match - array of "wrongdoers" otherwise
+  testAllPlayerPairs(allPlayers: Player[]) : boolean | String[] {
+    interface Checks {
+      North_South: boolean,
+      South_North: boolean,
+      East_West: boolean,
+      West_East: boolean
+    }
+    const directionChecks: Checks = {
+      North_South : this.selectOppositePlayer(allPlayers[0].getDirection()) == allPlayers[2],
+      South_North : this.selectOppositePlayer(allPlayers[1].getDirection()) == allPlayers[3],
+      East_West : this.selectOppositePlayer(allPlayers[2].getDirection()) == allPlayers[0],
+      West_East : this.selectOppositePlayer(allPlayers[3].getDirection()) == allPlayers[1],
+    }
+    let mismatches : string[] = [];
+    Object.keys(directionChecks).forEach((key: keyof Checks) => {
+      if (!directionChecks[key]) {
+        mismatches.push(key);
+      }
+    });
+
+    let a = Object.values(directionChecks).every(value => value === true);
+    return mismatches.length > 0 ? mismatches : a;
+  }
+
   populate() {
-    this.addPlayer(new Player("Player 1", "North"));
-    this.addPlayer(new Player("Player 2", "South"));
-    this.addPlayer(new Player("Player 3", "East"));
-    this.addPlayer(new Player("Player 4", "West"));
+    this.addPlayer(new Player("Player 1", North));
+    this.addPlayer(new Player("Player 2", South));
+    this.addPlayer(new Player("Player 3", East));
+    this.addPlayer(new Player("Player 4", West));
+    console.log(this.testAllPlayerPairs(this.players)); // Can be removed
   }
 }
 
