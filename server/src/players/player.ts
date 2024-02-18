@@ -1,6 +1,5 @@
 import Card from "../cards/card.js";
 
-// export type Direction = "North" | "South" | "East" | "West"; legacy
 export enum Direction {
   North = 0,
   South = 1,
