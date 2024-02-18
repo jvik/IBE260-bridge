@@ -10,7 +10,7 @@ router.get("/", (_req, res) => {
   res.json(bidLog.getBidLog());
 });
 
-router.post("/bid", (req, res) => {
+router.post("/", (req, res) => {
   const { bid, pass, playerName } = req.body;
   const bidLog = BidLog.getInstance();
   const ourTable = Table.getInstance();
