@@ -79,7 +79,6 @@ class Table {
   // This is a function that selects a player's partner
   selectOppositePlayer(direction: Direction): Player | undefined {
     const oppositeDirection = (direction + 2) % 4;
-    //console.log(oppositeDirection)
     return this.getPlayerByDirection(oppositeDirection);
   }
   // Test function: Returns true if all match - array of "wrongdoers" otherwise
@@ -131,7 +130,9 @@ class Table {
     this.addPlayer(new Player("Player 2", South));
     this.addPlayer(new Player("Player 3", East));
     this.addPlayer(new Player("Player 4", West));
-    console.info(this.testAllPlayerPairs(this.players));
+    this.testAllPlayerPairs(this.players)
+      ? console.info("Player pairs are created")
+      : console.error("Something went wrong creating the player pairs");
   }
 }
 
