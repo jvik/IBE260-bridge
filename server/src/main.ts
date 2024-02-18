@@ -29,7 +29,7 @@ app.get("/", (_req, res) => {
 });
 
 // Error handler. This will return the error message in the response.
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err.stack);
   res.status(500).send(err.message);
 });
