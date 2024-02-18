@@ -6,6 +6,7 @@ import cardsRouter from "./cards/cardsRouter.js";
 import playersRouter from "./players/playersRouter.js";
 import rulesRouter from "./rules/rulesRouter.js";
 import Table from "./table/table.js";
+import { Request, Response, NextFunction } from "express";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,6 +26,12 @@ if (process.env.populate === "true") {
 // Routes
 app.get("/", (_req, res) => {
   res.send("Welcome");
+});
+
+// Error handler. This will return the error message in the response.
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).send(err.message);
 });
 
 app.listen(port, () => {
