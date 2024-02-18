@@ -23,11 +23,13 @@ router.post("/bid", (req, res) => {
     throw new Error("Round is over");
   }
 
-  const suitAndRankExists = bid?.suit && bid?.rank;
-  if (!suitAndRankExists && !pass) {
+  const bidHasNoCardAndNoPass = !(bid?.suit && bid?.rank) && !pass;
+  if (bidHasNoCardAndNoPass) {
     throw new Error("Bid must have a suit and rank or be a pass");
   }
 
+  // Rules needs to be submitted in separate endpoint on rulesRouter
+  // That makes this code a lot shorter and easier to understand
   if (bidLog.explainerName) {
     throw new Error(
       `Meaning of the bid must be specified by ${bidLog.explainerName}!`,
