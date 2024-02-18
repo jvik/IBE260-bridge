@@ -1,7 +1,7 @@
 import express from "express";
+import BidLog from "../bids/bidLog.js";
 import Table from "../table/table.js";
 import Rule from "./rule.js";
-import BidLog from "../bids/bidLog.js";
 
 const router = express.Router();
 
