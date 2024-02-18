@@ -5,7 +5,7 @@ on:
   workflow_dispatch: # Enables manual triggering
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
