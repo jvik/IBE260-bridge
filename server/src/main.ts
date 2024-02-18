@@ -1,12 +1,12 @@
 import bodyParser from "body-parser";
 import "dotenv/config";
 import express from "express";
+import { NextFunction, Request, Response } from "express";
 import bidRouter from "./bids/bidsRouter.js";
 import cardsRouter from "./cards/cardsRouter.js";
 import playersRouter from "./players/playersRouter.js";
 import rulesRouter from "./rules/rulesRouter.js";
 import Table from "./table/table.js";
-import { Request, Response, NextFunction } from "express";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -35,6 +35,5 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.listen(port, () => {
-  // biome-ignore lint/suspicious/noConsoleLog: Makes sense to log the port
   console.log(`Server is running at http://localhost:${port}`);
 });
