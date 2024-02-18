@@ -34,6 +34,7 @@ router.post("/bid", (req, res) => {
     );
   }
 
+  // If a previous bid exists, check if we are moving in the correct order around the table
   if (bidLog.getBidLog().length > 0) {
     const nextPlayer = ourTable.getNextPlayerToBid().getPlayerName();
     if (playerName !== nextPlayer) {
