@@ -31,6 +31,10 @@ class Player {
   addCard(card: Card): void {
     this.cards.push(card);
   }
+
+  getNextDirection(): Direction {
+    return (this.direction + 1) % 4;
+  }
 }
 
 export default Player;

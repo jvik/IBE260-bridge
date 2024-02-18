@@ -1,3 +1,4 @@
+import BidLog from "../bids/bidLog.js";
 import Deck from "../cards/deck.js";
 import Player, {
   Direction,
@@ -109,14 +110,20 @@ class Table {
         mismatches.push(key);
       }
     }
-    /*Object.keys(directionChecks).forEach((key: keyof Checks) => {
-      if (!directionChecks[key]) {
-        mismatches.push(key);
-      }
-    });*/
 
     const a = Object.values(directionChecks).every((value) => value === true);
     return mismatches.length > 0 ? mismatches : a;
+  }
+
+  // Helper function to get the next player to bid from the direction of the table
+  getNextPlayerToBid(): Player {
+    const ourBidLog = BidLog.getInstance();
+    const lastBid = ourBidLog.getLastBid();
+    const ourTable = Table.getInstance();
+    const lastBidder = ourTable.getPlayerByName(lastBid.playerName);
+    const nextDirection = lastBidder.getNextDirection();
+    const nextPlayer = ourTable.getPlayerByDirection(nextDirection);
+    return nextPlayer;
   }
 
   populate() {
@@ -124,7 +131,7 @@ class Table {
     this.addPlayer(new Player("Player 2", South));
     this.addPlayer(new Player("Player 3", East));
     this.addPlayer(new Player("Player 4", West));
-    console.log(this.testAllPlayerPairs(this.players)); // Can be removed, but should be in place during testing
+    console.info(this.testAllPlayerPairs(this.players));
   }
 }
 
