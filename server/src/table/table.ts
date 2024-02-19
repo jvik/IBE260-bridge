@@ -1,5 +1,12 @@
+import BidLog from "../bids/bidLog.js";
 import Deck from "../cards/deck.js";
-import Player, { Direction } from "../players/player.js";
+import Player, {
+  Direction,
+  North,
+  South,
+  West,
+  East,
+} from "../players/player.js";
 import ruleSet from "../rules/ruleSet.js";
 
 class Table {
@@ -37,7 +44,6 @@ class Table {
         `The table already has a player in the direction ${player.direction}`,
       );
     }
-
     this.players.push(player);
     const ourDeck = Deck.getInstance();
     const ourTable = Table.getInstance();
@@ -70,11 +76,63 @@ class Table {
     return this.players.find((player) => player.name === name) as Player;
   }
 
+  // This is a function that selects a player's partner
+  selectOppositePlayer(direction: Direction): Player | undefined {
+    const oppositeDirection = (direction + 2) % 4;
+    return this.getPlayerByDirection(oppositeDirection);
+  }
+  // Test function: Returns true if all match - array of "wrongdoers" otherwise
+  testAllPlayerPairs(allPlayers: Player[]): boolean | string[] {
+    interface Checks {
+      North_South: boolean;
+      South_North: boolean;
+      East_West: boolean;
+      West_East: boolean;
+    }
+    const directionChecks: Checks = {
+      North_South:
+        this.selectOppositePlayer(allPlayers[0].getDirection()) ===
+        allPlayers[2],
+      South_North:
+        this.selectOppositePlayer(allPlayers[1].getDirection()) ===
+        allPlayers[3],
+      East_West:
+        this.selectOppositePlayer(allPlayers[2].getDirection()) ===
+        allPlayers[0],
+      West_East:
+        this.selectOppositePlayer(allPlayers[3].getDirection()) ===
+        allPlayers[1],
+    };
+    const mismatches: string[] = [];
+    for (const key of Object.keys(directionChecks) as Array<keyof Checks>) {
+      if (!directionChecks[key]) {
+        mismatches.push(key);
+      }
+    }
+
+    const a = Object.values(directionChecks).every((value) => value === true);
+    return mismatches.length > 0 ? mismatches : a;
+  }
+
+  // Helper function to get the next player to bid from the direction of the table
+  getNextPlayerToBid(): Player {
+    const ourBidLog = BidLog.getInstance();
+    const lastBid = ourBidLog.getLastBid();
+    const ourTable = Table.getInstance();
+    const lastBidder = ourTable.getPlayerByName(lastBid.playerName);
+    const nextDirection = lastBidder.getNextDirection();
+    const nextPlayer = ourTable.getPlayerByDirection(nextDirection);
+    return nextPlayer;
+  }
+
   populate() {
-    this.addPlayer(new Player("Player 1", "North"));
-    this.addPlayer(new Player("Player 2", "South"));
-    this.addPlayer(new Player("Player 3", "East"));
-    this.addPlayer(new Player("Player 4", "West"));
+    this.addPlayer(new Player("Player 1", North));
+    this.addPlayer(new Player("Player 2", South));
+    this.addPlayer(new Player("Player 3", East));
+    this.addPlayer(new Player("Player 4", West));
+    this.testAllPlayerPairs(this.players)
+      ? console.info("Player pairs are created")
+      : console.error("Something went wrong creating the player pairs");
   }
 }
 

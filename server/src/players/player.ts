@@ -1,6 +1,12 @@
 import Card from "../cards/card.js";
 
-export type Direction = "North" | "South" | "East" | "West";
+export enum Direction {
+  North = 0,
+  South = 1,
+  East = 2,
+  West = 3,
+}
+export const { North, South, East, West } = Direction;
 
 class Player {
   name: string;
@@ -23,6 +29,10 @@ class Player {
 
   addCard(card: Card): void {
     this.cards.push(card);
+  }
+
+  getNextDirection(): Direction {
+    return (this.direction + 1) % 4;
   }
 }
 

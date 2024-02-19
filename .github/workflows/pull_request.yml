@@ -1,28 +1,28 @@
-# name: Code quality
+name: Code quality
 
-# on:
-#   pull_request:
-#   workflow_dispatch: # Enables manual triggering
+on:
+  pull_request:
+  workflow_dispatch: # Enables manual triggering
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
+jobs:
+  lint:
+    runs-on: ubuntu-latest
 
-#     steps:
-#     - name: Checkout Repository
-#       uses: actions/checkout@v2
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-#     - name: Set up Node.js
-#       uses: actions/setup-node@v3
-#       with:
-#         node-version: 20
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
 
-#     - name: Install Dependencies
-#       working-directory: ./server
-#       run: npm install
+    - name: Install Dependencies
+      working-directory: ./server
+      run: npm install
 
-#     - name: Run Biome
-#       working-directory: ./server
-#       run: |
-#         # Assuming 'biome' is the command you want to run
-#         npm run lint
+    - name: Run Biome
+      working-directory: ./server
+      run: |
+        # Assuming 'biome' is the command you want to run
+        npm run lint

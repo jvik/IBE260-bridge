@@ -1,7 +1,6 @@
 import express from "express";
 import Bid from "../bids/bid.js";
 import BidLog from "../bids/bidLog.js";
-import Rules from "../rules/rules.js";
 import Table from "../table/table.js";
 
 const router = express.Router();
@@ -11,52 +10,56 @@ router.get("/", (_req, res) => {
   res.json(bidLog.getBidLog());
 });
 
-router.post("/bid", (req, res) => {
+router.post("/", (req, res) => {
   const { bid, pass, playerName } = req.body;
   const bidLog = BidLog.getInstance();
-  const roundOver = bidLog.isBiddingOver();
-
   const ourTable = Table.getInstance();
+
   if (ourTable.getPlayers().length < 4) {
     throw new Error("The table is not full");
   }
-  if (roundOver) {
+
+  if (bidLog.isBiddingOver()) {
     throw new Error("Round is over");
   }
-  const rule = bid?.rule; // quick check to look for existing rule
-  // if explainerName exists, and bid lacking explanation:
-  if (bidLog.explainerName !== undefined && rule === undefined) {
+
+  const bidHasNoCardAndNoPass = !(bid?.suit && bid?.rank) && !pass;
+  if (bidHasNoCardAndNoPass) {
+    throw new Error("Bid must have a suit and rank or be a pass");
+  }
+
+  // Rules needs to be submitted in separate endpoint on rulesRouter
+  // That makes this code a lot shorter and easier to understand
+  if (bidLog.explainerName) {
     throw new Error(
       `Meaning of the bid must be specified by ${bidLog.explainerName}!`,
     );
   }
-  let ourBid = undefined;
-  const suitAndRankExists = bid?.suit && bid?.rank;
-  if (bidLog.explainerName === undefined) {
-    if (suitAndRankExists || pass) {
-      ourBid = new Bid(playerName, bid?.suit, bid?.rank, pass);
-      bidLog.addBid(ourBid);
 
-      // TODO: REMOVE COMMENTS
-      // If the bid is not known, invoke partner explanation target for next round?
-      if (!pass && !bidLog.isBidMeaningKnown(ourBid)) {
-        // Here the logic for setting a player should be implemented.
-        bidLog.explainerName = "Player 3"; // for testing only
-      }
-    }
-  } else {
-    // TODO : 2 lines below may be unnecessary, for review!
-    // const currPlayers = ourTable.getPlayers();
-    // const playerNames: string[] = currPlayers.map((player) => player.name);
-    // If bid suit and rank are defined, name matches & has a rule:
-    if (suitAndRankExists && bidLog.explainerName === playerName && rule) {
-      const ourRule = new Rules(bid.suit, bid.rank, rule); // new rule
-      ourTable.tableRules.addRule(ourRule); // add rule
-      bidLog.explainerName = undefined; // reset explainer
+  // If a previous bid exists, check if we are moving in the correct order around the table
+  if (bidLog.getBidLog().length > 0) {
+    const nextPlayer = ourTable.getNextPlayerToBid().getPlayerName();
+    if (playerName !== nextPlayer) {
+      throw new Error(`It is ${nextPlayer}'s turn to bid`);
     }
   }
-  // console.log(bidLog);
-  res.json({ ourBid });
+
+  // Create and add the bid to the bid log
+  const newBid = new Bid(playerName, bid?.suit, bid?.rank, pass);
+  bidLog.addBid(newBid);
+
+  // If the bid is not known, invoke partner explanation target immediately
+  if (!pass && !bidLog.isBidMeaningKnown(newBid)) {
+    const currentPlayer = ourTable.getPlayerByName(playerName);
+    const directionOfPlayer = currentPlayer.getDirection();
+    const partnerOfCurrentPlayer =
+      ourTable.selectOppositePlayer(directionOfPlayer);
+    if (partnerOfCurrentPlayer) {
+      bidLog.explainerName = partnerOfCurrentPlayer.getPlayerName();
+    }
+  }
+
+  res.json({ newBid });
 });
 
 export default router;

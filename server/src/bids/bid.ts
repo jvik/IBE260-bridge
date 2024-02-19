@@ -14,6 +14,7 @@ class Bid {
     bidRank: number,
     pass?: boolean,
   ) {
+    // If pass is not defined or malformed, it is false
     let shouldWePass = pass;
     if (typeof pass !== "boolean") {
       shouldWePass = false;

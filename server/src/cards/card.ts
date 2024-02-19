@@ -27,10 +27,10 @@ class Card {
   constructor(suit: Suit, rank: Rank) {
     // Helper here to make sure that the suit and rank are valid
     if (!Object.values(Suit).includes(suit)) {
-      throw new Error("Invalid suit");
+      throw new Error(`Invalid suit "${suit}"`);
     }
     if (!Object.values(Rank).includes(rank)) {
-      throw new Error(`Invalid rank ${rank}`);
+      throw new Error(`Invalid rank  "${rank}"`);
     }
 
     this.suit = suit;

@@ -1,6 +1,7 @@
 import bodyParser from "body-parser";
 import "dotenv/config";
 import express from "express";
+import { NextFunction, Request, Response } from "express";
 import bidRouter from "./bids/bidsRouter.js";
 import cardsRouter from "./cards/cardsRouter.js";
 import playersRouter from "./players/playersRouter.js";
@@ -27,7 +28,12 @@ app.get("/", (_req, res) => {
   res.send("Welcome");
 });
 
+// Error handler. This will return the error message in the response.
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).send(err.message);
+});
+
 app.listen(port, () => {
-  // biome-ignore lint/suspicious/noConsoleLog: Makes sense to log the port
-  console.log(`Server is running at http://localhost:${port}`);
+  console.info(`Server is running at http://localhost:${port}`);
 });
