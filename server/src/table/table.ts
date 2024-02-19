@@ -1,3 +1,4 @@
+import BidLog from "../bids/bidLog.js";
 import Deck from "../cards/deck.js";
 import Player, {
   Direction,
@@ -78,7 +79,6 @@ class Table {
   // This is a function that selects a player's partner
   selectOppositePlayer(direction: Direction): Player | undefined {
     const oppositeDirection = (direction + 2) % 4;
-    //console.log(oppositeDirection)
     return this.getPlayerByDirection(oppositeDirection);
   }
   // Test function: Returns true if all match - array of "wrongdoers" otherwise
@@ -109,14 +109,20 @@ class Table {
         mismatches.push(key);
       }
     }
-    /*Object.keys(directionChecks).forEach((key: keyof Checks) => {
-      if (!directionChecks[key]) {
-        mismatches.push(key);
-      }
-    });*/
 
     const a = Object.values(directionChecks).every((value) => value === true);
     return mismatches.length > 0 ? mismatches : a;
+  }
+
+  // Helper function to get the next player to bid from the direction of the table
+  getNextPlayerToBid(): Player {
+    const ourBidLog = BidLog.getInstance();
+    const lastBid = ourBidLog.getLastBid();
+    const ourTable = Table.getInstance();
+    const lastBidder = ourTable.getPlayerByName(lastBid.playerName);
+    const nextDirection = lastBidder.getNextDirection();
+    const nextPlayer = ourTable.getPlayerByDirection(nextDirection);
+    return nextPlayer;
   }
 
   populate() {
@@ -124,7 +130,9 @@ class Table {
     this.addPlayer(new Player("Player 2", South));
     this.addPlayer(new Player("Player 3", East));
     this.addPlayer(new Player("Player 4", West));
-    console.log(this.testAllPlayerPairs(this.players)); // Can be removed, but should be in place during testing
+    this.testAllPlayerPairs(this.players)
+      ? console.info("Player pairs are created")
+      : console.error("Something went wrong creating the player pairs");
   }
 }
 
