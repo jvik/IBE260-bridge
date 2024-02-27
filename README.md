@@ -27,6 +27,14 @@ If you want to prepopulate the players, you can copy the .env.example to you own
 
 The server is also available in [dockerhub](https://hub.docker.com/repository/docker/jvik/ibe260-bridge-server/)
 
+### Manual testing
+
+With the vscode extension "REST Client"
+
+You can use the api.rest file to manually test the endpoints.
+
+VS Marketplace Link: <https://marketplace.visualstudio.com/items?itemName=humao.rest-client>
+
 ## Built With
 
 * [Node.js](https://nodejs.org/) - The runtime environment used

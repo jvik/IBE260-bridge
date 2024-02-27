@@ -1,0 +1,60 @@
+@url = http://localhost:3000
+
+# @name GetPlayers
+GET {{url}}/players
+###
+
+# @name RegisterPlayer
+POST {{url}}/players/register
+Content-Type: application/json
+
+{
+    "direction": "West",
+    "name": "George"
+}
+###
+
+# @name GetBids
+GET {{url}}/bids
+###
+
+# @name GetRules
+GET {{url}}/rules
+###
+
+# @name NewBid
+POST {{url}}/bids
+Content-Type: application/json
+
+{
+    "pass": false,
+    "playerName": "Player 1",
+    "bid": {
+        "suit": "clubs",
+        "rank": "2"
+    }
+}
+###
+
+# @name PassBid
+POST {{url}}/bids
+Content-Type: application/json
+
+{
+    "pass": true,
+    "playerName": "Player 4"
+}
+###
+
+# @name PostRule
+POST {{url}}/rules
+Content-Type: application/json
+
+{
+    "ruleText": "Hello I'm specifying a rule here. Lol"
+}
+###
+
+# @name GetCards
+GET {{url}}/cards
+###
