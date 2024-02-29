@@ -2,7 +2,7 @@
 
 ## About the project
 
-Project for IBE260 at Molde University College. A fairly simple full stack application to simulate a simplified bidding solution for contract bridge.
+Project for IBE260 at Molde University College. A fairly simple full stack application to emulate a simplified version of contract bridge with a node.js API.
 
 ## Getting Started
 
