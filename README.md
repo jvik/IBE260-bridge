@@ -1,4 +1,4 @@
-# IBE260-bridge
+# IBE260-bridge ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/jvik/ibe260-bridge/docker_build_server.yml)
 
 ## About the project
 
