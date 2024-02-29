@@ -1,17 +1,18 @@
 import Table from "../table/table.js";
 
 export type CardSuit = "spades" | "hearts" | "diamonds" | "clubs" | "no-trump";
+export type CardRank = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 class Bid {
   playerName: string;
   bidSuit: CardSuit;
-  bidRank: number;
+  bidRank: CardRank;
   pass: boolean;
 
   constructor(
     playerName: string,
     bidSuit: CardSuit,
-    bidRank: number,
+    bidRank: CardRank,
     pass?: boolean,
   ) {
     // If pass is not defined or malformed, it is false
@@ -20,6 +21,11 @@ class Bid {
       shouldWePass = false;
     } else {
       shouldWePass = pass;
+    }
+
+    // Deny bids larger than 7
+    if (bidRank > 7) {
+      throw new Error("Bid rank cannot be larger than 7");
     }
 
     const ourTable = Table.getInstance();

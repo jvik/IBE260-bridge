@@ -31,7 +31,7 @@ Content-Type: application/json
     "playerName": "Player 1",
     "bid": {
         "suit": "clubs",
-        "rank": "2"
+        "rank": "8"
     }
 }
 ###
