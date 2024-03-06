@@ -1,4 +1,3 @@
-import bodyParser from "body-parser";
 import "dotenv/config";
 import express from "express";
 import { NextFunction, Request, Response } from "express";
@@ -12,7 +11,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use("/players", playersRouter);
 app.use("/bids", bidRouter);
